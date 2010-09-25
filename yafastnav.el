@@ -3,7 +3,7 @@
 ;; Copyright (C) 2010 tm8st
 
 ;; Author: tm8st <http://twitter.com/tm8st>
-;; Version: 0.1
+;; Version: 0.2
 ;; Keywords: convenience, move, fastnav
 
 ;; This file is free software; you can redistribute it and/or modify
