@@ -1,0 +1,14 @@
+# 
+# gitignore config
+# 
+
+# 非公開設定ファイル
+private.el
+.DS_Store
+
+# サブディレクトリを含む hoge.elc ファイルの無視
+*.elc
+
+# 非標準の拡張ファイルは管理外
+external/
+!external/README
