@@ -3,7 +3,7 @@
 ;; Copyright (C) 2010 tm8st
 
 ;; Author: tm8st <http://twitter.com/tm8st>
-;; Version: 0.2
+;; Version: 0.21
 ;; Keywords: convenience, move, fastnav
 
 ;; This file is free software; you can redistribute it and/or modify
@@ -82,6 +82,8 @@
        ?Q ?W ?E ?R ?T ?Y ?U ?I ?O ?P
        ?Z ?X ?C ?V ?B ?N ?M
        ?, ?. ?: ?- ?^ ?;
+
+       ;; 押しにくいので、使わない
        ;; ?< ?> ?@ ?\* ?\[ ?\]
        ;; ?\\ ?\  ?' ?( ?) ?=
        ;; ?~ ?| ?{ ?} ?\_
@@ -192,10 +194,8 @@
        (setq char (read-event "jump to?:"))
        (if (eq char yafastnav-more-shortcutkey)
 	   (progn
-	     (dolist (o ols)
-	       (delete-overlay o))
-	     (yafastnav-jump-to-between-point (- end-pos 1) bottom backward)
-	     )
+	     (dolist (o ols) (delete-overlay o))
+	     (yafastnav-jump-to-between-point end-pos bottom backward))
 	 (unless (eq (assoc char ls) nil)
 	   (progn
 	     (dolist (o ols)
