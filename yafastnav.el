@@ -189,7 +189,7 @@
 			 (char-to-string
 			  (nth index yafastnav-shortcut-keys))
 			 'face yafastnav-shortcut-key-face))
-	   (overlay-put ov 'window selected-window))
+	   (overlay-put ov 'window (selected-window))
            (overlay-put ov 'width 1)
            (overlay-put ov 'priority 100)
 	   (add-to-list 'ols ov)
