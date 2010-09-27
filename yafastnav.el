@@ -73,25 +73,25 @@
   :group 'yafastnav)
 
 (defcustom yafastnav-shortcut-keys
-     '(
-       ?a ?s ?d ?f ?g ?h ?k ?l
-       ?q ?w ?e ?r ?t ?y ?u ?i ?o ?p
-       ?z ?x ?c ?v ?b ?n ?m
-       ?1 ?2 ?3 ?4 ?5 ?6 ?7 ?8 ?9 ?0
-       ?A ?S ?D ?F ?G ?H ?K ?L
-       ?Q ?W ?E ?R ?T ?Y ?U ?I ?O ?P
-       ?Z ?X ?C ?V ?B ?N ?M
-       ?, ?. ?: ?- ?^ ?;
+  '(
+    ?a ?s ?d ?f ?g ?h ?k ?l
+    ?q ?w ?e ?r ?t ?y ?u ?i ?o ?p
+    ?z ?x ?c ?v ?b ?n ?m
+    ?1 ?2 ?3 ?4 ?5 ?6 ?7 ?8 ?9 ?0
+    ?A ?S ?D ?F ?G ?H ?K ?L
+    ?Q ?W ?E ?R ?T ?Y ?U ?I ?O ?P
+    ?Z ?X ?C ?V ?B ?N ?M
+    ?, ?. ?: ?- ?^ ?;
 
-       ;; 押しにくいので、使わない
-       ;; ?< ?> ?@ ?\* ?\[ ?\]
-       ;; ?\\ ?\  ?' ?( ?) ?=
-       ;; ?~ ?| ?{ ?} ?\_
-       ;; ?! ?\" ?# ?$ ?% ?&
-       )
-     "要素の選択用ショートカットキーリスト"
-     :type 'string
-     :group 'yafastnav)
+    ;; 押しにくいので、使わない
+    ;; ?< ?> ?@ ?\* ?\[ ?\]
+    ;; ?\\ ?\  ?' ?( ?) ?=
+    ;; ?~ ?| ?{ ?} ?\_
+    ;; ?! ?\" ?# ?$ ?% ?&
+    )
+  "要素の選択用ショートカットキーリスト"
+  :type 'string
+  :group 'yafastnav)
 
 (defface yafastnav-shortcut-key-face-type
   '((((class color)) (:foreground "LightPink" :background "gray15"))
@@ -146,18 +146,17 @@
 (defun yafastnav-jump-to-between-point (top bottom backward)
   "候補の作成とジャンプの実行"
  (let ((ret)
+       (regex (assoc major-mode yafastnav-mode-regex-alist))
+       (start-pos (point))
+       (end-pos nil)
        (ls nil)
        (ols nil)
        (index 0)
-       (start-pos (point))
-       (end-pos nil)
-       (char nil)
-       (regex (assoc major-mode yafastnav-mode-regex-alist)))
+       (input-char nil))
    (if (eq regex nil)
      (setq regex yafastnav-default-regex)
      (setq regex (cdr regex)))
    (save-excursion
-     (setq inhibit-quit t) ;; C-g で中断されないように
      (goto-char top)
      (while
 	 (and
@@ -191,16 +190,17 @@
      (goto-char start-pos))
    (if (> index 0)
      (progn
-       (setq char (read-event "jump to?:"))
-       (if (eq char yafastnav-more-shortcutkey)
-	   (progn
-	     (dolist (o ols) (delete-overlay o))
-	     (yafastnav-jump-to-between-point end-pos bottom backward))
-	 (unless (eq (assoc char ls) nil)
-	   (progn
-	     (dolist (o ols)
-	       (delete-overlay o))
-	     (goto-char (nth 1 (assoc char ls)))))))
+       (let* ((inhibit-quit t) ;; C-g で中断されないように
+	     (input-char (read-event "jump to?:"))) 
+	 (if (eq input-char yafastnav-more-shortcutkey)
+	     (progn
+	       (dolist (o ols) (delete-overlay o))
+	       (yafastnav-jump-to-between-point end-pos bottom backward))
+	   (unless (eq (assoc input-char ls) nil)
+	     (progn
+	       (dolist (o ols)
+		 (delete-overlay o))
+	       (goto-char (nth 1 (assoc input-char ls))))))))
        (message "none candidate."))
  (dolist (o ols)
    (delete-overlay o))))
