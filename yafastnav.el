@@ -75,11 +75,11 @@
 (defcustom yafastnav-shortcut-keys
   '(
     ?\^A ?\^S ?\^D ?\^F      ?\^H ?\^K ?\^L
-    ?\^Q ?\^W ?\^E ?\^R      ?\^Y ?\^U ?\^I ?\^O ?\^P
+    ?\^Q ?\^W ?\^E ?\^R      ?\^Y ?\^U      ?\^O ?\^P
     ?\^Z ?\^X ?\^C ?\^V ?\^B ?\^N ?\^M
 
     ;; ?\^G キャンセル用
-    ;; ?\^T 文字列が崩れるのでつかわない
+    ;; ?\^T, ?\^I 文字列が崩れるのでつかわない
 
     ?a ?s ? ?f ?g ?h ?k ?l
     ?q ?w ?e ?r ?t ?y ?u ?i ?o ?p
@@ -189,7 +189,7 @@
 			 (char-to-string
 			  (nth index yafastnav-shortcut-keys))
 			 'face yafastnav-shortcut-key-face))
-	   (overlay-put ov 'window (selected-window))
+	   (overlay-put ov 'window selected-window))
            (overlay-put ov 'width 1)
            (overlay-put ov 'priority 100)
 	   (add-to-list 'ols ov)
