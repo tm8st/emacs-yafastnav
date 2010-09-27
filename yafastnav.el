@@ -66,21 +66,31 @@
   :type '(repeat (symbol . regexp))
   :group 'yafastnav)
 
-(defcustom yafastnav-more-shortcutkey ? 
-  "次の要素のリストアップの実行ショートカットキー
+(defcustom yafastnav-more-shortcutkey-list (list ?  ?\^ )
+  "次の要素のリストアップの実行ショートカットキーリスト
   yafastnav-shortcut-keysに含まれている文字だと不具合がでるので注意。"
   :type 'char
   :group 'yafastnav)
 
 (defcustom yafastnav-shortcut-keys
   '(
-    ?a ?s ?d ?f ?g ?h ?k ?l
+    ?\^A ?\^S ?\^D ?\^F      ?\^H ?\^K ?\^L
+    ?\^Q ?\^W ?\^E ?\^R      ?\^Y ?\^U ?\^I ?\^O ?\^P
+    ?\^Z ?\^X ?\^C ?\^V ?\^B ?\^N ?\^M
+
+    ;; ?\^G キャンセル用
+    ;; ?\^T 文字列が崩れるのでつかわない
+
+    ?a ?s ? ?f ?g ?h ?k ?l
     ?q ?w ?e ?r ?t ?y ?u ?i ?o ?p
     ?z ?x ?c ?v ?b ?n ?m
+
     ?1 ?2 ?3 ?4 ?5 ?6 ?7 ?8 ?9 ?0
+
     ?A ?S ?D ?F ?G ?H ?K ?L
     ?Q ?W ?E ?R ?T ?Y ?U ?I ?O ?P
     ?Z ?X ?C ?V ?B ?N ?M
+    
     ?, ?. ?: ?- ?^ ?;
 
     ;; 押しにくいので、使わない
@@ -192,7 +202,7 @@
      (progn
        (let* ((inhibit-quit t) ;; C-g で中断されないように
 	     (input-char (read-event "jump to?:"))) 
-	 (if (eq input-char yafastnav-more-shortcutkey)
+	 (if (memq input-char yafastnav-more-shortcutkey-list)
 	     (progn
 	       (dolist (o ols) (delete-overlay o))
 	       (yafastnav-jump-to-between-point end-pos bottom backward))
