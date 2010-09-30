@@ -316,4 +316,5 @@ yafastnav-shortcut-ctrl-keysと同じならびでなければならない"
      (message "none candidate."))
     )))
 
+
 (provide 'yafastnav)
